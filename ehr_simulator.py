@@ -33,9 +33,11 @@ def generate_ehr_logs(output_dir="data", num_patients=1000):
         # Base clinical path
         path = ["Emergency Intake", "Triage Assessment", "Vitals Measurement", "Doctor Examination"]
         
-       # 60% of patients experience Radiology; 40% of X-ray patients experience a paperwork loop-back bottleneck
+       # Operational bottleneck:
+       # X-Ray patients with missing paperwork are sent back to Intake/Triage.
         has_xray = random.random() < 0.60
-        has_paperwork_error = has_xray and (random.random() < 0.40) # 40% of X-ray patients sent back to Triage
+        has_paperwork_error = has_xray and (random.random() < 0.40) 
+        # 40% of X-ray patients sent back to Triage
 
         if has_xray:
             path.append("Radiology / X-Ray")
