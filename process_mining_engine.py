@@ -43,6 +43,8 @@ def analyze_process_mining(data_dir="data", output_dir="output"):
 
     # 2. Conformance Checking (Mandated Path vs Actual Path)
     # Mandated Clinical Pathway: Emergency Intake -> Triage Assessment -> Vitals Measurement -> Doctor Examination -> Treatment / Medication -> Billing & Discharge
+    
+    # Define the expected clinical pathway for conformance checking.
     ideal_path = ["Emergency Intake", "Triage Assessment", "Vitals Measurement", "Doctor Examination", "Treatment / Medication", "Billing & Discharge"]
 
     patient_paths = df.groupby('case_id')['activity_name'].apply(list).reset_index()
