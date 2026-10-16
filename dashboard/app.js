@@ -77,22 +77,52 @@ function getFilteredEvents(selectedCases) {
         .sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
 }
 
+
 function calculateTransitions(events) {
     const byCase = {};
+
     events.forEach(e => {
-        if (!byCase[e.case_id]) byCase[e.case_id] = [];
+        if (!e.case_id) return;
+
+        if (!byCase[e.case_id]) {
+            byCase[e.case_id] = [];
+        }
+
         byCase[e.case_id].push(e);
     });
 
     const groups = {};
+
     Object.values(byCase).forEach(path => {
-        path.sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+        path.sort(
+            (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+        );
+
         for (let i = 0; i < path.length - 1; i++) {
             const source = path[i];
             const target = path[i + 1];
-            const wait = (new Date(target.timestamp) - new Date(source.timestamp)) / 60000;
-            const key = `${source.activity_name}|${target.activity_name}`;
-            if (!groups[key]) groups[key] = { sum: 0, count: 0 };
+
+            const sourceTime = new Date(source.timestamp).getTime();
+            const targetTime = new Date(target.timestamp).getTime();
+
+            if (
+                !Number.isFinite(sourceTime) ||
+                !Number.isFinite(targetTime) ||
+                targetTime < sourceTime ||
+                !source.activity_name ||
+                !target.activity_name
+            ) {
+                continue;
+            }
+
+            const wait = (targetTime - sourceTime) / 60000;
+            const key =
+                `${source.activity_name}|${target.activity_name}`;
+
+            if (!groups[key]) {
+                groups[key] = { sum: 0, count: 0 };
+            }
+
             groups[key].sum += wait;
             groups[key].count += 1;
         }
@@ -104,8 +134,9 @@ function calculateTransitions(events) {
             avg: v.count ? v.sum / v.count : 0,
             count: v.count
         }))
-        .sort((a,b) => b.avg - a.avg);
+        .sort((a, b) => b.avg - a.avg);
 }
+
 
 function calculateVariants(selectedCases) {
     const counts = {};
