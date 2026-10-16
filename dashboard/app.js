@@ -36,25 +36,39 @@ async function loadDashboardData() {
     }
 }
 
+
 function getSelectedCases() {
     if (!dashboardData) return [];
 
     const doctor = document.getElementById("doctorFilter").value;
     const severity = document.getElementById("severityFilter").value;
 
-    return dashboardData.cases.filter(c =>
-        (doctor === "ALL" || doctorNameMatches(c.doctor, doctor)) &&
-        (severity === "ALL" || c.severity === severity)
-    );
+    return dashboardData.cases.filter(c => {
+        const doctorMatches =
+            doctor === "ALL" ||
+            doctorNameMatches(c.doctor, doctor);
+
+        const severityMatches =
+            severity === "ALL" ||
+            (c.severity || "").toLowerCase() ===
+            severity.toLowerCase();
+
+        return doctorMatches && severityMatches;
+    });
 }
 
 function doctorNameMatches(name, key) {
     if (!name) return false;
-    if (key === "SMITH") return name.includes("Smith");
-    if (key === "PATEL") return name.includes("Patel");
-    if (key === "JOHNSON") return name.includes("Johnson");
+
+    const normalizedName = name.toLowerCase();
+
+    if (key === "SMITH") return normalizedName.includes("smith");
+    if (key === "PATEL") return normalizedName.includes("patel");
+    if (key === "JOHNSON") return normalizedName.includes("johnson");
+
     return true;
 }
+
 
 function getFilteredEvents(selectedCases) {
     const ids = new Set(selectedCases.map(c => c.case_id));
