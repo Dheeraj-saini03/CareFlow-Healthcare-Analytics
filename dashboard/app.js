@@ -141,6 +141,7 @@ function calculateTransitions(events) {
 function calculateVariants(selectedCases) {
     const counts = {};
     selectedCases.forEach(c => {
+        // Read the patient's activity sequence for clinical path classification.
         const path = c.path_sequence;
 
         let label;
