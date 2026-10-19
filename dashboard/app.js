@@ -206,7 +206,7 @@ function updateKPIs(cases, transitions) {
     document.querySelectorAll(".stat-value")[3].textContent =
         "Not in raw data";
 }
-
+// Render average transition durations as a Chart.js bar chart.
 function renderTransitionChart(transitions) {
     const labels = transitions.map(t =>
         transitionLabels[t.key] || t.key.replace("|", " ➔ ")
