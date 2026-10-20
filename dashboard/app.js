@@ -241,7 +241,7 @@ function renderTransitionChart(transitions) {
         }
     });
 }
-
+// Render the frequency distribution of clinical path variants as a doughnut chart.
 function renderVariantChart(variants) {
     const labels = Object.keys(variants);
     const values = Object.values(variants);
