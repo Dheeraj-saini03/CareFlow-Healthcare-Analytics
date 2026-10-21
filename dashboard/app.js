@@ -271,7 +271,7 @@ function renderVariantChart(variants) {
         }
     });
 }
-
+// Update process-map nodes with average transition times and live case metrics.
 function updateProcessMap(transitions, cases) {
     const avgFor = (source, target, fallback) => {
         const found = transitions.find(t => t.key === `${source}|${target}`);
