@@ -30,7 +30,10 @@ async function loadDashboardData() {
         document.querySelector(".status-badge").textContent = "● CAREFLOW DATA CONNECTED";
         updateDashboard();
     } catch (error) {
-        console.error("Could not load dashboard_data.json:", error);
+        console.error(
+    "CareFlow dashboard data could not be loaded:",
+    error
+);
         document.querySelector(".status-badge").textContent = "● DATA CONNECTION ERROR";
         alert("CareFlow data could not be loaded. Run the dashboard through a local server or GitHub Pages, not by double-clicking index.html.");
     }
