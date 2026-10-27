@@ -31,3 +31,33 @@ python process_mining_engine.py
 # 4. Launch Dashboard
 # Open dashboard/index.html in any modern web browser
 ```
+## Project Outputs
+
+The pipeline produces:
+
+- ehr_raw_event_logs.csv
+- dfg_transitions_summary.csv
+- process_bottlenecks.csv
+- conformance_audit.csv
+- dashboard_data.json
+
+## Dashboard Features
+
+- Doctor filter
+- Severity filter
+- Conformance KPIs
+- DFG transition analysis
+- Path variant analysis
+- Bottleneck identification
+- Dynamic clinical process map
+
+## Key Finding
+
+The process mining analysis identifies a paperwork-related
+loop-back from Radiology / X-Ray to Intake Form Re-Triage.
+
+## Development
+
+CareFlow was developed incrementally through data generation,
+process discovery, conformance analysis, SQL transformation,
+dashboard integration, testing and documentation.
